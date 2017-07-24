@@ -1,0 +1,8 @@
+extends layout
+block content
+  h1 !{title}
+  div(class="collection")
+    each article, i in articles
+      a( class="collection-item" href="/articles/"+article._id) #{article.title}
+  if user
+    a.btn(href="/articles/add") Dodaj nowy  

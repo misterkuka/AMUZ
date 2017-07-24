@@ -1,0 +1,16 @@
+extends layout
+block content
+  h1 Nowy
+  if errors
+      each error, i in errors
+        script var data = "!{error.msg}"; Materialize.toast(data, 4000)
+
+  form(method='POST', action="/articles/add")
+    #form-group
+      label Title:
+      input.form-control(name='title', type='text')
+    #form-group
+      label Body:
+      div(class="input-field")
+        textarea.form-control(name='body', type='text', class="materialize-textarea")
+    input.btn.btn-primary(type='submit',value='submit')

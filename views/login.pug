@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  if errors
+      each error, i in errors
+        script var data = "!{error.msg}"; Materialize.toast(data, 4000)
+  h1 Zaloguj
+  form(method='POST', action='/users/login')
+    #form-group
+      label Nazwa Użytkownika:
+      input.form-control(name='username', type='text')
+    #form-group
+      label Hasło:
+      input.form-control(name='password', type='password')
+    br
+    input.btn(type='submit' value='prześlij')

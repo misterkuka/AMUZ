@@ -1,0 +1,38 @@
+doctype html
+pretty:true
+html
+  head
+    title Profile
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js" type="text/javascript")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    script(src="/js/main.js")
+  body(style="  display: flex;min-height: 100vh;flex-direction: column;")
+    != messages('alert', locals)
+    nav
+      div(class="nav-wrapper")
+        if user
+          ul(class="right")
+            li
+              a(href='/users/logout') logout
+        else
+          a(href="#" data-activates="mobile-demo" class="button-collapse")
+            i(class="material-icons") menu
+          ul(class="right hide-on-med-and-down")
+            li
+              a(href="/users/register") Register
+            li
+              a(href="/users/login") Login
+          ul(class="side-nav" id="mobile-demo")
+            li
+              a(href="/users/register") Register
+            li
+              a(href="/users/login") Login
+    div(class="container" style="flex:1 0 auto;")
+      block content
+    br
+    footer(class="page-footer")
+      span lubie placki
+    script $(document).ready(function(){ $(".button-collapse").sideNav();})

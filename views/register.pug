@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1 Zarejestruj
+  if errors
+      each error, i in errors
+        script var data = "!{error.msg}"; Materialize.toast(data, 4000)
+  form(method='POST', action='/users/register')
+    #form-group
+      label Imię i Nazwisko:
+      input.form-control(name='name', type='text')  
+    #form-group
+      label Nazwa Użytkownika:
+      input.form-control(name='username', type='text')
+    #form-group
+      label Email:
+      input.form-control(name='email', type='text')
+    #form-group
+      label Hasło:
+      input.form-control(name='password', type='password')
+    #form-group
+      label Powtórz Hasło:
+      input.form-control(name='password1', type='password')
+    br
+    input.btn(type='submit' value='prześlij')

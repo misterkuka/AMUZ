@@ -1,0 +1,14 @@
+extends layout
+block content
+  h1 Edit the article
+  if errors
+        script Materialize.toast('Wypełnij wszystkie pola', 4000)
+  form(method='POST', action="/articles/edit/" +article._id)
+    #form-group
+      label Title:
+      input.form-control(name='title', type='text' value=article.title)
+    #form-group
+      label Body:
+      div(class="input-field")
+        textarea.form-control(name='body', type='text', class="materialize-textarea") #{article.body}
+    input.btn.btn-primary(type='submit',value='submit')
