@@ -4,7 +4,11 @@ block content
     div( class="col s12 m12")
       div(class='card')
         div(class="card-image")
-          img(src="http://www.adultswim.com/misc/samurai-jack-backgrounds/media/SAMURAI_JACK_1920X1080_Skulls.png")
+          img(src="../../../../upload/" + data.photo)
+          form(action="/articles/profile/upload/" +data._id ,  method="post", enctype="multipart/form-data")
+            input(type="file", style="display:none", onchange="form.submit()", id="img", name="image")
+            label(for="img" class="btn-floating halfway-fab waves-effect waves-light red")
+              i(class="material-icons") camera
         div( class="card-content")
           form(method='POST', action="/articles/profile/edit/" +data._id)
             #form-group

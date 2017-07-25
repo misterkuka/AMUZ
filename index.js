@@ -8,7 +8,6 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const config = require('./config/database');
-// parse application/x-www-form-urlencoded;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 // Express Session Middleware
@@ -29,6 +28,9 @@ mongoose.connect(config.database);
 let db = mongoose.connection;
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/ui', express.static(__dirname + '/node_modules/materialize-css/'));
+
+app.use('/upload', express.static(__dirname + '/upload/'));
+
 db.once('open', function(){
   console.log('conncected to db');
 })

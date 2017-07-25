@@ -3,6 +3,12 @@ const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
 const router = express.Router();
+const multer  = require('multer');
+const Loki = require('lokijs');
+const cors = require('cors');
+const fs = require('fs');
+var upload = multer({ dest: 'upload'});
+
 
 // Express Session Middleware
 router.use(session({
@@ -197,6 +203,36 @@ router.get('/profile/edit/:id', ensureAuthenticated, function(req,res){
       data:req.user
     });
 });
+var type = upload.single('image');
+router.post('/profile/upload/:id',type, function (req,res) {
+  var filename = req.file.filename;
+  console.log('filename: ',filename)
+  /** When using the "single"
+      data come in "req.file" regardless of the attribute "name". **/
+  var tmp_path = req.file.path;
 
+  /** The original name of the uploaded file
+      stored in the variable "originalname". **/
+      var user_id = req.params.id;
+  //
+  // var target_path = 'upload/' + req.file.filename ;
+
+
+  /** A better way to copy the uploaded file. **/
+  var src = fs.createReadStream(tmp_path);
+  var dest = fs.createWriteStream(req.file.filename);
+  src.pipe(dest);
+  src.on('end', function() {
+    let article = {
+      photo: filename
+    };
+    let query = {_id:user_id};
+    User.update(query, article, function(){});
+    res.redirect('/articles/profile/edit/' + user_id);
+    });
+  src.on('error', function(err) { req.flash('error', "Błąd Przesyłania");
+  res.redirect('/articles/profile/edit/' + user_id); });
+
+});
 
 module.exports = router;

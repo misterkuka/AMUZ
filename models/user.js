@@ -27,7 +27,9 @@ about: {
 instrument:{
   type:String,
 },
-
+photo: {
+  type:String,
+},
 education:[{
         school:{
           type:String

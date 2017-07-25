@@ -12,10 +12,14 @@ html
     script(src="/js/main.js")
   body(style="  display: flex;min-height: 100vh;flex-direction: column;")
     != messages('alert', locals)
-    nav
-      div(class="nav-wrapper")
-        if user
-          ul(class="right")
+    if user
+      nav
+        div(class="nav-wrapper")
+          a(href="/articles/home" class="brand-logo center")
+            i(class="material-icons") music_note
+          a(href="#" data-activates="mobile-demo" class="button-collapse")
+              i(class="material-icons") menu
+          ul(class="right hide-on-med-and-down")
             li
               a(href="/articles/home")
                 i(class="material-icons") home
@@ -25,10 +29,20 @@ html
             li
               a(href='/users/logout' class="tooltiped" data-position="bottom" data-delay="50" data-tooltip="Wyloguj")
                   i(class="material-icons") exit_to_app
-              
-        else
+          ul(class="side-nav" id="mobile-demo")
+            li
+              a(href="/articles/home") Ogłoszenia
+            li 
+              a(href="/articles/profile/" + user._id) Profil
+            li
+              a(href='/users/logout') Wyloguj
+    if !user
+      nav
+        div(class="nav-wrapper")
+          a(href="/" class="brand-logo center")
+            i(class="material-icons") music_note
           a(href="#" data-activates="mobile-demo" class="button-collapse")
-            i(class="material-icons") menu
+              i(class="material-icons") menu
           ul(class="right hide-on-med-and-down")
             li
               a(href="/articles/home") Ogłoszenia
@@ -38,16 +52,11 @@ html
               a(href="/users/login") Zaloguj
           ul(class="side-nav" id="mobile-demo")
             li
-              a(href="/users/register") Register
+              a(href="/articles/home") Ogłoszenia
             li
-              a(href="/users/login") Login
+              a(href="/users/register") Zarejestruj
+            li
+              a(href="/users/login") Zaloguj
     div(class="container" style="flex:1 0 auto;")
       block content
-    br
-    if !user
-      footer(class="page-footer")
-        div(class="footer-copyright")
-          div(class="container")
-            | ©2017 Lubię Placki
-            a(class="grey-text text-lighten-4 right" href="http://siekamcebulke.tk/") Siekam Cebulke
-  script $(document).ready(function(){ $(".button-collapse").sideNav(); $('.tooltipped').tooltip({delay: 50});})
+    script $(document).ready(function(){ $(".button-collapse").sideNav(); $('.tooltipped').tooltip({delay: 50});})

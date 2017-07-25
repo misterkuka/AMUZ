@@ -1,2 +1,87 @@
-extends layout
-block content
+doctype html
+pretty:true
+html
+  head
+    title Profile
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+    link(rel="stylesheet" href="/ui/dist/css/materialize.css")
+    link(href="/css/style.css" rel="stylesheet")
+    script(src="/ui/dist/js/materialize.min.js" type="text/javascript")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    script(src="/js/main.js")
+  body(style="  display: flex;min-height: 100vh;flex-direction: column;")
+    != messages('alert', locals)
+    //- NAVIGATION
+    if user
+      nav
+        div(class="nav-wrapper")
+          a(href="/articles/home" class="brand-logo center")
+            i(class="material-icons") music_note
+          a(href="#" data-activates="mobile-demo" class="button-collapse")
+              i(class="material-icons") menu
+          ul(class="right hide-on-med-and-down")
+            li
+              a(href="/articles/home")
+                i(class="material-icons") home
+            li 
+              a(href="/articles/profile/" + user._id)
+                i(class="material-icons") person
+            li
+              a(href='/users/logout' class="tooltiped" data-position="bottom" data-delay="50" data-tooltip="Wyloguj")
+                  i(class="material-icons") exit_to_app
+          ul(class="side-nav" id="mobile-demo")
+            li
+              a(href="/articles/home") Ogłoszenia
+            li 
+              a(href="/articles/profile/" + user._id) Profil
+            li
+              a(href='/users/logout') Wyloguj
+    if !user
+      nav
+        div(class="nav-wrapper")
+          a(href="/" class="brand-logo center")
+            i(class="material-icons") music_note
+          a(href="#" data-activates="mobile-demo" class="button-collapse")
+              i(class="material-icons") menu
+          ul(class="right hide-on-med-and-down")
+            li
+              a(href="/articles/home") Ogłoszenia
+            li
+              a(href="/users/register") Zarejestruj
+            li
+              a(href="/users/login") Zaloguj
+          ul(class="side-nav" id="mobile-demo")
+            li
+              a(href="/articles/home") Ogłoszenia
+            li
+              a(href="/users/register") Zarejestruj
+            li
+              a(href="/users/login") Zaloguj
+          //- PARRALAX
+    div(class="parallax-container")
+      div(class="parallax")
+        img(src="images/parallax1.jpg")
+    div(class="section white")
+      div(class="row container")
+        h2(class="header") Get yourself a Double Cheesburger
+        p(class="grey-text text-darken-3 lighten-3") 
+        | Just a few weeks after DARPA announced a major investment in developing brain-computer interface technology, the US government department has revealed another major project. The Safe Genes program is set to invest US$65 million over four years in seven teams that will investigate ways to make gene editing technologies safer, more targeted and potentially even reversible.
+        |"The field of gene editing has been advancing at an astounding pace, opening the door to previously impossible genetic solutions but without much emphasis on how to mitigate potential downsides," says Safe Genes program manager Renee Wegrzyn. "DARPA launched Safe Genes to begin to refine those capabilities by emphasizing safety first for the full range of potential applications, enabling responsible science to proceed by providing tools to | prevent and mitigate misuse."
+        | The program has three main technical objectives: to develop processes that allow greater control of genome editing in living systems, to develop countermeasures that protect genome integrity in populations, and to investigate a way to remove engineered genes from living systems.
+    div(class="parallax-container")
+      div(class="parallax")
+        img(src="images/parallax2.jpg")
+          //- FOOTER        
+    if !user
+      footer(class="page-footer")
+        div(class="container")
+          div(class="row")
+            div(class="col l6 s12")
+              h5(class="white-text") Serwis dla Głuchych
+              p(class="grey-text text-lighten-4") Ten prosty trik sprawi, że odzyskasz słuch w ciągu tygodnia. Sprawdź sam!
+        div(class="footer-copyright")
+          div(class="container")
+            | ©2017 Lubię Placki
+            a(class="grey-text text-lighten-4 right" href="http://siekamcebulke.tk/") Siekam Cebulke
+  script $(document).ready(function(){ $('.parallax').parallax();$(".button-collapse").sideNav(); $('.tooltipped').tooltip({delay: 50});})
