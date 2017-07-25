@@ -4,11 +4,14 @@ block content
   if errors
       each error, i in errors
         script var data = "!{error.msg}"; Materialize.toast(data, 4000)
+  br
+  br
   div(class="row")
-    div(class="col s6 offset-s3")
+    div(class="col s12 m6 l4 offset-m3 offset-l4")
       div(class="card-panel ")
-        h3 Zaloguj
-        div(class="row")
+        div(class="indigo-text") Zaloguj
+        div(class="divider")
+        div(class="row left-align")
           form(method='POST', action='/users/login')
             div(class="input-field col s12")
               i(class="material-icons prefix") account_circle
@@ -20,5 +23,5 @@ block content
               #form-group
               input( id='pass' name='password' type='password')
               label(for="pass") Hasło
-            br
-            input.btn(type='submit' value='Zaloguj')
+              br
+              input( class="btn" type='submit' value='Zaloguj')
