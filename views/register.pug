@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  h1 Zarejestruj
   if errors
       each error, i in errors
         script var data = "!{error.msg}"; Materialize.toast(data, 4000)
@@ -9,21 +8,40 @@ block content
       script var data = "!{alerts}"; Materialize.toast(data, 4000)
   if alerts1
       script var data = "!{alerts1}"; Materialize.toast(data, 4000)
-  form(method='POST', action='/users/register')
-    #form-group
-      label Imię i Nazwisko:
-      input.form-control(name='name', type='text')  
-    #form-group
-      label Nazwa Użytkownika:
-      input.form-control(name='username', type='text')
-    #form-group
-      label Email:
-      input.form-control(name='email', type='text')
-    #form-group
-      label Hasło:
-      input.form-control(name='password', type='password')
-    #form-group
-      label Powtórz Hasło:
-      input.form-control(name='password1', type='password')
-    br
-    input.btn(type='submit' value='prześlij')
+  br
+  br    
+  div(class="row")
+    div(class="col s12 m6 l4 offset-m3 offset-l4")
+      div(class="card-panel ")
+        div(class="indigo-text") Zarejestruj
+        div(class="divider")
+        div(class="row left-align")
+          form(method='POST', action='/users/register')
+            div(class="input-field col s12")
+              i(class="material-icons prefix") account_circle
+              #form-group
+              input( id='username_in' name='name' type='text')
+              label(for="username_in") Imię i Nazwisko:
+            div(class="input-field col s12")
+              i(class="material-icons prefix") person
+              #form-group
+              input( id='username_in1' name='username' type='text')
+              label(for="username_in1") nazwa użytkownika:
+            div(class="input-field col s12")
+              i(class="material-icons prefix") email
+              #form-group
+              input( id='email' name='email' type='text')
+              label(for="email") email
+            div(class="input-field col s12")
+              i(class="material-icons prefix") lock
+              #form-group
+              input( id='pass' name='password' type='password')
+              label(for="pass") Hasło
+            div(class="input-field col s12")
+              i(class="material-icons prefix") lock
+              #form-group
+              input( id='pass1' name='password' type='password')
+              label(for="pass") Powtórz Hasło
+              br
+              input( class="btn" type='submit' value='Zaloguj')
+                    
