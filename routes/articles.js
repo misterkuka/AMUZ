@@ -38,7 +38,7 @@ router.get('/home', function(req,res){
       res.render('home', {
         title:'Ogłoszenia',
         articles: articles,
-        user:users
+        data:users
       });
     });
   });
