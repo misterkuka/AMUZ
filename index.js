@@ -28,6 +28,7 @@ app.use(function (req, res, next) {
 mongoose.connect(config.database);
 let db = mongoose.connection;
 app.use(express.static(path.join(__dirname,'public')));
+app.use('/ui', express.static(__dirname + '/node_modules/materialize-css/'));
 db.once('open', function(){
   console.log('conncected to db');
 })

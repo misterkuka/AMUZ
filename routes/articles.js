@@ -11,6 +11,7 @@ router.use(session({
   saveUninitialized: true
 }));
 
+
 // Express Messages Middleware
 router.use(require('connect-flash')());
 router.use(function (req, res, next) {
@@ -18,16 +19,32 @@ router.use(function (req, res, next) {
   next();
 });
 
+
 // models
 let Article = require('../models/article');
 let User = require('../models/user');
 
 //Add ROUTE
-router.get('/add', function(req,res){
+router.get('/add', ensureAuthenticated, function(req,res){
   res.render('add', {
     title:'Add Article'
   });
 });
+
+
+router.get('/home', function(req,res){
+  Article.find({}, function(err, articles){
+    User.find({},function(err, users){
+      res.render('home', {
+        title:'Ogłoszenia',
+        articles: articles,
+        user:users
+      });
+    });
+  });
+});
+
+
 
 // Express Validator
 router.use(expressValidator({
@@ -67,7 +84,7 @@ router.get('/:id', function(req,res){
   });
 });
 
-router.get('/edit/:id',  function(req,res){
+router.get('/edit/:id', ensureAuthenticated, function(req,res){
   Article.findById(req.params.id, function(err,article){
     res.render('edit', {article:article});
   });
@@ -95,7 +112,7 @@ router.post('/add',ensureAuthenticated, function(req,res){
         res.render('add');
       } else {
         req.flash('success', 'Artykuł został dodany')
-        res.redirect('/');
+        res.redirect('/articles/home');
       }
     });
 
@@ -141,9 +158,45 @@ function ensureAuthenticated(req,res,next){
   if(req.isAuthenticated()) {
     return next();
   } else {
-    req.flash('danger', 'Please Login');
+    req.flash('danger', 'Zaloguj się');
     res.redirect('/users/login')
   }
 }
+
+// USER METHODS
+
+router.post('/profile/edit/:id', ensureAuthenticated, function(req,res){
+  let article = {
+    name: req.body.name,
+    about:req.body.about,
+  };
+
+  let query = {_id:req.params.id};
+
+  User.update(query, article,function(err){
+    if(err){
+      res.render('edit');
+    }else {
+      req.flash('success', "Dane Zaktualizowane");
+      res.redirect('/articles/profile/' + req.user._id);
+    }
+  });
+});
+router.get('/profile/:id', function(req,res){
+    User.findById(req.params.id, function(err,user){
+      res.render('profile', {
+        users:user,
+        data: req.user
+      });
+    });
+  });
+
+
+router.get('/profile/edit/:id', ensureAuthenticated, function(req,res){
+    res.render('profile_edit', {
+      data:req.user
+    });
+});
+
 
 module.exports = router;

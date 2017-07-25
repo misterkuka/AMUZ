@@ -40,6 +40,39 @@ router.get('/register', function(req,res){
 });
 
 //Register Process
+
+// CHECK FOR EXISTANCE
+function mail_exists(query){
+    var x = 0;
+    User.count({email:query}, function (error, count) {
+      console.log('mail', count, query);
+      x = count;
+    });
+
+console.log('x=', x);
+  if(x > 0){
+  return 'adres email już zarejestrowany';
+} else {
+  return 0;
+};
+
+};
+
+function user_exists(query){
+    var x = 0;
+    User.count({username:query}, function (error, count) {
+      console.log('user', count, query);
+      x = count;
+    });
+
+  console.log('x=', x);
+  if(x > 0){
+  return 'nazwa użytkownika wykorzystana';
+} else {
+  return 0;
+};
+};
+
 router.post('/register', function(req,res){
   const name = req.body.name;
   const username = req.body.username;
@@ -55,10 +88,14 @@ router.post('/register', function(req,res){
   req.checkBody('password1', 'Hasła się nie zgadzają').equals(req.body.password);
 
   let errors = req.validationErrors();
-
+  let alerts = mail_exists(email);
+  let alerts1 = user_exists(username);
+  console.log(alerts, alerts1, email, username);
   if(errors){
     res.render('register',{
-      errors:errors
+      errors:errors,
+      alerts:alerts,
+      alerts1:alerts1,
     });
   } else {
     let newUser = new User({
@@ -98,7 +135,7 @@ router.get('/login', function(req,res){
 // LOGIN PROCESS
 router.post('/login', function(req,res, next){
   passport.authenticate('local',{
-    successRedirect:'/',
+    successRedirect:'/articles/home',
     failureRedirect:'/users/login',
     failureFlash:true
   })(req,res,next);

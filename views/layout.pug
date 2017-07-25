@@ -4,8 +4,9 @@ html
   head
     title Profile
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
-    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css")
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js" type="text/javascript")
+    link(rel="stylesheet" href="/ui/dist/css/materialize.css")
+    link(href="/css/style.css" rel="stylesheet")
+    script(src="/ui/dist/js/materialize.min.js" type="text/javascript")
     link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     script(src="/js/main.js")
@@ -16,19 +17,25 @@ html
         if user
           ul(class="right")
             li
-              a(href="/") home
+              a(href="/articles/home")
+                i(class="material-icons") home
+            li 
+              a(href="/articles/profile/" + user._id)
+                i(class="material-icons") person
             li
-              a(href='/users/logout') logout
+              a(href='/users/logout' class="tooltiped" data-position="bottom" data-delay="50" data-tooltip="Wyloguj")
+                  i(class="material-icons") exit_to_app
+              
         else
           a(href="#" data-activates="mobile-demo" class="button-collapse")
             i(class="material-icons") menu
           ul(class="right hide-on-med-and-down")
             li
-              a(href="/") home
+              a(href="/articles/home") Ogłoszenia
             li
-              a(href="/users/register") Register
+              a(href="/users/register") Zarejestruj
             li
-              a(href="/users/login") Login
+              a(href="/users/login") Zaloguj
           ul(class="side-nav" id="mobile-demo")
             li
               a(href="/users/register") Register
@@ -37,6 +44,10 @@ html
     div(class="container" style="flex:1 0 auto;")
       block content
     br
-    footer(class="page-footer")
-      span lubie placki
-    script $(document).ready(function(){ $(".button-collapse").sideNav();})
+    if !user
+      footer(class="page-footer")
+        div(class="footer-copyright")
+          div(class="container")
+            | ©2017 Lubię Placki
+            a(class="grey-text text-lighten-4 right" href="http://siekamcebulke.tk/") Siekam Cebulke
+  script $(document).ready(function(){ $(".button-collapse").sideNav(); $('.tooltipped').tooltip({delay: 50});})

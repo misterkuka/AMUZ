@@ -1,0 +1,17 @@
+extends layout
+block content
+  div(class="row")
+    div( class="col s12 m12")
+      div(class='card')
+        div(class="card-image")
+          img(src="http://www.adultswim.com/misc/samurai-jack-backgrounds/media/SAMURAI_JACK_1920X1080_Skulls.png")
+          if user
+            if users.id == data._id
+              a(class="btn-floating halfway-fab waves-effect waves-light red" href="/articles/profile/edit/"+data._id)
+                i(class="material-icons") edit
+        div( class="card-content")
+          span(class='card-title') !{users.name}
+          div(class="chip") @!{users.username}
+          div(class="divider")
+          br
+          p !{users.about}

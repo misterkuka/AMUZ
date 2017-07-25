@@ -12,12 +12,30 @@ username:{
 },
 email:{
     type:String,
-    required:true
+    required:true,
+    // unique:true
 },
 password:{
     type:String,
     required:true
-}
+},
+
+about: {
+  type:String,
+},
+
+instrument:{
+  type:String,
+},
+
+education:[{
+        school:{
+          type:String
+        },
+        completed:{
+          type:String
+        }
+}]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
